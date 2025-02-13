@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered LaTeX Converter</title>
+  <link rel="stylesheet" href="/handwriting_to_latex_notes/styles.css" />
+  <script type="module" crossorigin src="/handwriting_to_latex_notes/assets/index-3cfb730f.js"></script>
+</head>
+<body>
+<header>
+  <h1>AI-Powered LaTeX Converter</h1>
+</header>
+<main>
+  <!-- File Upload Section -->
+  <section id="upload-section">
+    <h2>Upload File</h2>
+    <input type="file" id="fileInput" accept=".pdf, .png, .jpg, .jpeg" />
+    <button id="sendToGemini">Convert File</button>
+  </section>
+
+  <!-- API Key Section -->
+  <section id="api-key-section">
+    <h2>API Key</h2>
+    <label for="apiKey">API Key:</label>
+    <input type="text" id="apiKey" placeholder="Enter your API key" />
+    <a href="https://aistudio.google.com/apikey" target="_blank">(don't have an api key?)</a>
+  </section>
+
+  <!-- LaTeX Output Section -->
+  <section id="latex-section">
+    <h2>LaTeX Output</h2>
+    <textarea id="latexOutput" rows="10" cols="50" placeholder="LaTeX output will appear here..."></textarea>
+    <!-- New Button: Opens the LaTeX code in Overleaf -->
+    <button id="compileLatex">Open in Overleaf</button>
+  </section>
+</main>
+
+<!-- Main JavaScript Module -->
+<script type="module" src="/handwriting_to_latex_notes/main.js"></script>
+</body>
+
+</html>

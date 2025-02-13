@@ -1,5 +1,4 @@
 import { uploadMediaFile, sendToApi } from "./api.js";
-import { renderPDF } from "./pdfViewer.js";
 import { API_PROMPT } from "./prompt.js";
 
 // DOM Elements
@@ -7,7 +6,7 @@ const fileInput = document.getElementById("fileInput");
 const sendButton = document.getElementById("sendToGemini");
 const apiKeyInput = document.getElementById("apiKey");
 const latexOutput = document.getElementById("latexOutput");
-const downloadButton = document.getElementById("downloadPdf");
+const compileButton = document.getElementById("compileLatex");
 
 // Variable to store the selected file
 let selectedFile = null;
@@ -41,26 +40,34 @@ sendButton.addEventListener("click", async () => {
 
         // Display the LaTeX output in the textarea.
         latexOutput.value = latexText;
-
-        // Render the PDF preview using the LaTeX code.
-        const pdfBlob = await renderPDF(latexText);
-
-        // Enable the Download button and attach the download functionality.
-        downloadButton.disabled = false;
-        downloadButton.replaceWith(downloadButton.cloneNode(true));
-        const newDownloadButton = document.getElementById("downloadPdf");
-        newDownloadButton.addEventListener("click", () => {
-            const url = URL.createObjectURL(pdfBlob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "converted_output.pdf";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
     } catch (error) {
         console.error("Error during processing:", error);
         alert("An error occurred. Please try again.");
     }
+});
+
+// Helper function to base64-encode a Unicode string.
+function toBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+
+// When the user clicks "Compile LaTeX", open the LaTeX code in Overleaf.
+compileButton.addEventListener("click", () => {
+    const latexText = latexOutput.value;
+    if (!latexText.trim()) {
+        alert("LaTeX output is empty.");
+        return;
+    }
+
+    // Convert the LaTeX code to a Base64 string.
+    const base64Latex = toBase64(latexText);
+
+    // Create a Data URL for the LaTeX file.
+    const dataUrl = "data:application/x-tex;base64," + base64Latex;
+
+    // Construct the Overleaf URL using the snip_uri parameter.
+    const overleafUrl = "https://www.overleaf.com/docs?snip_uri=" + encodeURIComponent(dataUrl);
+
+    // Open Overleaf in a new browser tab.
+    window.open(overleafUrl, "_blank");
 });

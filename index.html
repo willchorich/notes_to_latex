@@ -15,7 +15,6 @@
   <section id="upload-section">
     <h2>Upload File</h2>
     <input type="file" id="fileInput" accept=".pdf, .png, .jpg, .jpeg" />
-    <!-- New Button: Triggers the file upload and conversion -->
     <button id="sendToGemini">Convert File</button>
   </section>
 
@@ -31,13 +30,8 @@
   <section id="latex-section">
     <h2>LaTeX Output</h2>
     <textarea id="latexOutput" rows="10" cols="50" placeholder="LaTeX output will appear here..."></textarea>
-  </section>
-
-  <!-- PDF Preview Section -->
-  <section id="pdf-section">
-    <h2>PDF Preview</h2>
-    <div id="pdfViewer"></div>
-    <button id="downloadPdf" disabled>Download PDF</button>
+    <!-- New Button: Opens the LaTeX code in Overleaf -->
+    <button id="compileLatex">Open in Overleaf</button>
   </section>
 </main>
 
